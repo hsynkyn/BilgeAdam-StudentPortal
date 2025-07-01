@@ -1,0 +1,16 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using AutoMapper;
+using Business.Manager.Interface;
+using Core.Entities.Concrete;
+using Core.Interface;
+
+namespace Business.Manager.Concrete
+{
+    public class CourseManager(ICourseRepository service, IMapper mapper) : BaseManager<ICourseRepository, Course>(service, mapper), ICourseManager
+    {
+    }
+}

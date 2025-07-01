@@ -1,0 +1,39 @@
+﻿
+@{
+	ViewData["Title"] = "Create Course";
+}
+@model CreateCourseVM
+
+<div class="row">
+	<div class="col-md-8">
+		<div class="card">
+			<div class="card-header">
+				<h3 class="card-title">Yeni Kurs Ekle</h3>
+			</div>
+			<form asp-action="CreateCourse">
+				<div class="card-body">
+					<div>
+						<label asp-for="Name" class="form-label"></label>
+						<input asp-for="Name" class="form-control"/>
+						<span asp-validation-for="Name" class="text-danger"></span>
+					</div>
+					<div>
+						<label asp-for="Description" class="form-label"></label>
+						<input asp-for="Description" class="form-control" />
+						<span asp-validation-for="Description" class="text-danger"></span>
+					</div>
+					<div>
+						<label asp-for="TotalHour" class="form-label"></label>
+						<input asp-for="TotalHour" class="form-control" />
+						<span asp-validation-for="TotalHour" class="text-danger"></span>
+					</div>
+					
+				</div>
+				<div class="card-footer d-flex align-items-center justify-content-between" style="height:50px">
+					<a asp-action="Index" class="btn btn-outline-dark">Geri Dön</a>
+					<button type="submit" class="btn btn-outline-success">Kaydet</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

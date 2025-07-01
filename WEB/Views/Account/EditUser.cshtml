@@ -1,0 +1,50 @@
+﻿@{
+	ViewData["Title"] = "EditUser";
+}
+@model EditUserVM
+
+<div class="row">
+	<div class="col-md-8">
+		<div class="card">
+			<div class="card-header">
+				<h3 class="card-title">Bilgileri Düzenle</h3>
+			</div>
+			<form asp-action="EditUser">
+				<input type="hidden" asp-for="Id"/>
+				<input type="hidden" asp-for="FirstName"/>
+				<input type="hidden" asp-for="LastName"/>
+				<div class="card-body">
+					<div>
+						<label asp-for="FirstName" class="form-label"></label>
+						<input disabled asp-for="FirstName" class="form-control" />
+						<span asp-validation-for="FirstName" class="text-danger"></span>
+					</div>
+					<div>
+						<label asp-for="LastName" class="form-label"></label>
+						<input disabled asp-for="LastName" class="form-control" />
+						<span asp-validation-for="LastName" class="text-danger"></span>
+					</div>
+					<div>
+						<label asp-for="Email" class="form-label"></label>
+						<input asp-for="Email" class="form-control" />
+						<span asp-validation-for="Email" class="text-danger"></span>
+					</div>
+					<div>
+						<label asp-for="UserName" class="form-label"></label>
+						<input asp-for="UserName" class="form-control" />
+						<span asp-validation-for="UserName" class="text-danger"></span>
+					</div>
+					<div>
+						<label asp-for="Password" class="form-label"></label>
+						<a asp-action="ChangePassword" class="btn btn-outline-dark d-block">Şifre Değiştir</a>
+					</div>
+
+				</div>
+				<div class="card-footer d-flex align-items-center justify-content-between" style="height:50px">
+					<a asp-controller="Home" asp-action="Index" class="btn btn-outline-dark">Geri Dön</a>
+					<button type="submit" class="btn btn-outline-success">Kaydet</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
