@@ -12,6 +12,7 @@ namespace Business.Manager.Interface
     public interface ITeacherManager : IBaseManager<ITeacherRepository, Teacher>
     {
         Task<GetTeacherForSelectListDTO> GetTeacherByClassroomId(Guid classroomId);
+        Task<Guid> GetTeacherIdByAppUserId(Guid appUserId);
 
     }
 }

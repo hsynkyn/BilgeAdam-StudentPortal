@@ -3,35 +3,33 @@
 }
 @model StudentDetailVM
 
-<div class="container rounded bg-white mt-5 mb-5 text-dark">
+<div class="container rounded bg-white text-dark">
     <div class="row">
         <div class="col-md-6 border-right">
             @if (User.IsInRole("Teacher"))
             {
                 <span class="mt-5 text-center">
-                    <a asp-controller="Classrooms" asp-action="GetStudentsByClassroomId" asp-route-classroomId="@Model.ClassroomId" class="btn btn-primary profile-button"><i class="fa-solid fa-circle-arrow-left"></i> Geri Dön</a>
+                    <a asp-controller="Teachers" asp-action="GetStudents" asp-route-id="@Model.ClassroomId" class="btn btn-primary profile-button"><i class="fa-solid fa-circle-arrow-left"></i> Geri Dön</a>
                 </span>
             }
-            <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+            <div class="d-flex flex-column align-items-center text-center">
                 @if (Model.ImagePath != null)
                 {
-                    <img class="rounded-circle mt-5" width="150" src="~/img/@Model.ImagePath">
+                    <img class="rounded-circle my-2" width="150" src="~/img/@Model.ImagePath">
                 }
                 else
                 {
-                    <img class="rounded-circle mt-5" width="150" src="~/img/noimage.png">
+                    <img class="rounded-circle my-2" width="150" src="~/img/noimage.png">
 
                 }
                 <span class="font-weight-bold">@Model.FirstName @Model.LastName</span>
                 <span class="text-black-50">@Model.Email</span>
             </div>
-            <div class="p-3 py-5">
-                <div class="d-flex justify-content-between align-items-center mb-3">
+            <div class="">
+                <div class="d-flex justify-content-center align-items-center mt-5">
                     <h4 class="text-right">Öğrenci Bilgileri</h4>
                 </div>
-                <div class="row mt-2">
-                </div>
-                <div class="row mt-3">
+                <div class="row">
                     <div class="col-md-12">
                         <label class="labels">Doğum Tarihi</label><h5 class="form-control">
                             @Model.BirthDate.ToShortDateString()
@@ -46,8 +44,8 @@
             </div>
         </div>
         <div class="col-md-6">
-            <div class="p-3 py-5">
-                <div class="d-flex justify-content-between align-items-center mb-3">
+            <div class="">
+                <div class="d-flex justify-content-center align-items-center mb-3">
                     <h4 class="text-right">Sınavlar</h4>
                 </div>
                 <form asp-action="UpdateStudentExams">
@@ -66,7 +64,7 @@
                     <input type="hidden" asp-for="ImagePath" />
                     <div class="col-md-12">
                         <label class="labels">Vize</label>
-                        @if (User.IsInRole("teacher"))
+                        @if (User.IsInRole("Teacher"))
                         {
                             <input type="number" min="0" max="100" asp-for="Exam1" class="form-control" />
                         }
@@ -109,7 +107,7 @@
                 </form>
 
                 <div class="col-md-12">
-                    @if (Model.ProjectPath != null)
+                    @if (Model.ProjectPath != null || Model.ProjectExam != null)
                     {
                         <label class="labels">Proje</label>
                         <div class="d-flex align-items-start justify-content-between">

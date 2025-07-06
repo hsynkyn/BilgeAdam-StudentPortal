@@ -50,9 +50,9 @@ namespace Business.Manager.Concrete
         public async Task<bool> AnyAsync(Expression<Func<C, bool>> expression)=>await _service.AnyAsync(expression);
                
 
-        public async Task<List<T>> GetByDefaultsAsync<T>(Expression<Func<C, bool>> expression)
+        public async Task<List<T>> GetByDefaultsAsync<T>(Expression<Func<C, bool>> expression, Func<IQueryable<C>, IIncludableQueryable<C, object>>? join = null)
         {
-            var entityList =  await _service.GetByDefaultsAsync(expression);
+            var entityList =  await _service.GetByDefaultsAsync(expression, join);
             var dtoList = _mapper.Map<List<T>>(entityList);
 
             return dtoList;
@@ -80,6 +80,8 @@ namespace Business.Manager.Concrete
             => await _service.GetFilteredList(select, where, orderBy, join);
 
         public async Task<IDbContextTransaction> BeginTransactionAsync() => await _service.BeginTransactionAsync();
+
+
 
     }
 }

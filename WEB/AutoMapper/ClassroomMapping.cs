@@ -21,6 +21,7 @@ namespace WEB.AutoMapper
 
             CreateMap<CreateClassroomVM, CreateClassroomDTO>().ReverseMap();
             CreateMap<UpdateClassroomVM, UpdateClassroomDTO>().ReverseMap();
+            CreateMap<GetClassroomForTeacherVM, GetClassroomForTeacherDTO>().ReverseMap();
         }
     }
 }

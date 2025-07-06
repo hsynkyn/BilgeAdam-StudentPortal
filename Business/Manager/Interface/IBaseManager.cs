@@ -22,7 +22,7 @@ namespace Business.Manager.Interface
 
 
         Task<T?> GetByIdAsync<T>(Guid id);
-        Task<List<T>> GetByDefaultsAsync<T>(Expression<Func<C, bool>> expression);
+        Task<List<T>> GetByDefaultsAsync<T>(Expression<Func<C, bool>> expression, Func<IQueryable<C>, IIncludableQueryable<C, object>>? join = null);
 
         Task<T?> GetByDefaultAsync<T>(Expression<Func<C, bool>> expression, Func<IQueryable<C>, IIncludableQueryable<C, object>>? join = null);
 
@@ -37,6 +37,7 @@ namespace Business.Manager.Interface
             );
 
         Task<IDbContextTransaction> BeginTransactionAsync();
+
 
     }
 }

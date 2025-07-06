@@ -7,6 +7,7 @@ using DTO.Concrete.CourseDTO;
 using DTO.Concrete.StudentDTO;
 using DTO.Concrete.TeacherDTO;
 using DTO.Concrete.UserDTO;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -25,8 +26,11 @@ namespace WEB.Areas.Education.Controllers
                                     ICourseManager courseManager,
                                     ITeacherManager teacherManager, IUserManager userManager, IEmailSender emailSender) : Controller
     {
-        private readonly string _uploadImagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\img\\uploads");
+        private readonly string _uploadImagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\img");
+        private readonly string _uploadProjectPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\uploads");
 
+
+        [Authorize(Roles = "Admin,CustomerManager")]
         public async Task<IActionResult> Index()
         {
             var model = await studentManager.GetFilteredListAsync
@@ -41,6 +45,8 @@ namespace WEB.Areas.Education.Controllers
             return View(model);
         }
 
+
+        [Authorize(Roles = "Admin,CustomerManager")]
         public async Task<IActionResult> CreateStudent()
         {
             ViewBag.Courses = new SelectList
@@ -51,6 +57,7 @@ namespace WEB.Areas.Education.Controllers
             return View();
         }
 
+        [Authorize(Roles = "Admin,CustomerManager")]
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateStudent(CreateStudentVM model)
         {
@@ -149,6 +156,8 @@ namespace WEB.Areas.Education.Controllers
             }
         }
 
+
+        [Authorize(Roles = "Admin,CustomerManager")]
         public async Task<IActionResult> UpdateStudent(string id)
         {
             var guidResult = Guid.TryParse(id, out Guid entityId);
@@ -184,6 +193,8 @@ namespace WEB.Areas.Education.Controllers
             return View(model);
         }
 
+
+        [Authorize(Roles = "Admin,CustomerManager")]
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> UpdateStudent(UpdateStudentVM model)
         {
@@ -240,6 +251,8 @@ namespace WEB.Areas.Education.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+
+        [Authorize(Roles = "Admin,CustomerManager")]
         public async Task<IActionResult> DeleteStudent(string id)
         {
             var guidResult = Guid.TryParse(id, out Guid entityId);
@@ -273,25 +286,20 @@ namespace WEB.Areas.Education.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        public async Task<IActionResult> StudentDetail()
+
+        [Authorize(Roles = "Admin,CustomerManager, Student, Teacher")]
+        public async Task<IActionResult> StudentDetail(string? id)
         {
-            if (User.IsInRole("Student"))
-            {
-                var userId = await userManager.GetUserIdByClaimsAsync(User);
-                var dto = await studentManager.GetByDefaultAsync<StudentDetailDTO>(x => x.AppUserId == userId && x.Status != Status.Passive, x => x.Include(z => z.Classroom!).ThenInclude(z => z.Teacher!).ThenInclude(z => z.Course!));
+            var userId = await userManager.GetUserIdByClaimsAsync(User);
+            var dto = await studentManager.GetByDefaultAsync<StudentDetailDTO>(x => (id != null ? x.Id == Guid.Parse(id) : x.AppUserId == userId) && x.Status != Status.Passive, x => x.Include(z => z.Classroom!).ThenInclude(z => z.Teacher!).ThenInclude(z => z.Course!));
 
-                var model = mapper.Map<StudentDetailVM>(dto);
-                return View(model);
-            }
+            var model = mapper.Map<StudentDetailVM>(dto);
+            return View(model);
 
-            if (User.IsInRole("Teacher"))
-            {
-                return RedirectToAction(nameof(Index));
-            }
 
-            return Unauthorized();
         }
 
+        [Authorize(Roles = "Admin,CustomerManager, Student")]
         public async Task<IActionResult> SendProject(StudentDetailVM model)
         {
             var student = await studentManager.GetByIdAsync<StudentDetailDTO>(model.Id);
@@ -300,7 +308,7 @@ namespace WEB.Areas.Education.Controllers
             {
                 var fileName = Guid.NewGuid() + "_" + student.FirstName + "_" + student.LastName + "_" +
                                model.ProjectName + Path.GetExtension(model.Project.FileName);
-                var uploadPath = Path.Combine(_uploadImagePath, fileName);
+                var uploadPath = Path.Combine(_uploadProjectPath, fileName);
                 Directory.CreateDirectory(Path.GetDirectoryName(uploadPath)!);
                 using (var stream = new FileStream(uploadPath, FileMode.Create))
                 {
@@ -322,13 +330,45 @@ namespace WEB.Areas.Education.Controllers
             return RedirectToAction(nameof(StudentDetail), student);
         }
 
+        [Authorize(Roles = "Admin,CustomerManager, Student, Teacher")]
         public FileResult Download(string filePath)
         {
-            string uploadDir = Path.Combine(_uploadImagePath, filePath);
+            string uploadDir = Path.Combine(_uploadProjectPath, filePath);
             byte[] fileBytes = System.IO.File.ReadAllBytes(uploadDir);
 
             return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, filePath);
 
         }
+
+        [Authorize(Roles = "Admin,CustomerManager, Teacher")]
+        public async Task<IActionResult> UpdateStudentExams(StudentDetailVM model)
+        {
+            if (!ModelState.IsValid)
+            {
+                TempData["Error"] = "Lütfen aşağıdaki kurallara uyunuz!";
+            }
+            else
+            {
+                var dto = await studentManager.GetByIdAsync<StudentDetailDTO>(model.Id);
+
+
+                if (dto == null)
+                    TempData["Error"] = "Öğrenci bulunamadı";
+                else
+                {
+                    mapper.Map(model, dto);
+                    var result = await studentManager.UpdateAsync(dto, dto.Id);
+                    if (!result)
+                        TempData["Error"] = "Notlar güncellenemedi!!";
+                    else
+                        TempData["Success"] = "Notlar güncellendi!!";
+
+                }
+            }
+
+            return RedirectToAction(nameof(StudentDetail), model);
+
+        }
+
     }
 }

@@ -1,0 +1,45 @@
+﻿@{
+    ViewData["Title"] = "Classrooms Index";
+}
+@model List<GetClassroomForTeacherVM>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Sınıflar</h3>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Sınıf</th>
+                                <th>Mevcut</th>
+                                <th>Başlangıç</th>
+                                <th>Bitiş</th> 
+                                <th>Detay</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var classroom in Model)
+                            {
+                                <tr>
+                                    <td>@classroom.Name</td>
+                                    <td>@classroom.Name</td>
+
+                                    <td>@classroom.StartDate</td>
+                                    <td>@classroom.EndDate</td>
+                                    <td>
+                                        <a asp-action="GetStudents" asp-route-id="@classroom.Id" class="btn btn-outline-success">Detay</a>
+                                    </td>
+                                   
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

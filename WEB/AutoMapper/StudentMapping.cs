@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Core.Entities.Concrete;
+using Core.Enums;
 using Core.Extensions;
 using DTO.Concrete.StudentDTO;
 using WEB.Areas.Education.Models.StudentVM;
@@ -24,7 +25,17 @@ namespace WEB.AutoMapper
 
             CreateMap<CreateStudentVM, CreateStudentDTO>().ReverseMap();
             CreateMap<UpdateStudentVM, UpdateStudentDTO>().ReverseMap();
-            CreateMap<StudentDetailVM, StudentDetailDTO>().ReverseMap().ForMember(x=>x.StudentStatus, opt=> opt.MapFrom(x=>x.StudentStatus.GetDisplayName()));
+
+            CreateMap<StudentDetailDTO, StudentDetailVM>()
+             .ForMember(x => x.StudentStatus,
+                 opt => opt.MapFrom(x => x.StudentStatus.GetDisplayName()));
+
+            CreateMap<StudentDetailVM, StudentDetailDTO>()
+                .ForMember(x => x.StudentStatus,
+                    opt => opt.MapFrom(x => x.StudentStatus.GetEnumValueFromDisplayName<StudentStatus>()));
+
+            CreateMap<GetStudentForClassroomVM, GetStudentForClassroomDTO>().ReverseMap().ForMember(x => x.StudentStatus,
+                 opt => opt.MapFrom(x => x.StudentStatus.GetDisplayName()));
         }
     }
 }

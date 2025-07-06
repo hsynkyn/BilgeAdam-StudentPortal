@@ -4,6 +4,7 @@ using Core.Enums;
 using DTO.Concrete.CourseDTO;
 using DTO.Concrete.CustomerManagerDTO;
 using DTO.Concrete.UserDTO;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -12,6 +13,7 @@ using WEB.Areas.Admin.Models.CustomerManagerVM;
 namespace WEB.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class CustomerManagersController(ICMManager customerManager, IMapper mapper, IUserManager userManager,IEmailSender emailSender) : Controller
     {
         public async Task<IActionResult> Index()

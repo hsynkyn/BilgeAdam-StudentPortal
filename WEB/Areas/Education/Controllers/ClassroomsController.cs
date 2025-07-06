@@ -9,15 +9,18 @@ using Core.Enums;
 using Microsoft.EntityFrameworkCore;
 using DTO.Concrete.TeacherDTO;
 using Core.Entities.Concrete;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WEB.Areas.Education.Controllers
 {
     [Area("Education")]
+    [Authorize(Roles = "Admin,CustomerManager")]
     public class ClassroomsController(IClassroomManager classroomManager, IMapper mapper, ITeacherManager teacherManager) : Controller
     {
         private readonly IClassroomManager _classroomManager = classroomManager;
         private readonly IMapper _mapper = mapper;
         private readonly ITeacherManager _teacherManager = teacherManager;
+
 
         public async Task<IActionResult> Index()
         {

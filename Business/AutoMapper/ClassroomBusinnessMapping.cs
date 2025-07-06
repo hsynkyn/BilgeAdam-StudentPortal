@@ -17,6 +17,7 @@ namespace Business.AutoMapper
             CreateMap<Classroom, CreateClassroomDTO>().ReverseMap();
             CreateMap<Classroom, UpdateClassroomDTO>().ReverseMap();
             CreateMap<Classroom, GetClassroomForSelectListDTO>().ReverseMap();
+            CreateMap<GetClassroomForTeacherDTO, Classroom>().ReverseMap().ForMember(x => x.Size, opt => opt.MapFrom(x => x.Students.Count));
         }
 
     }

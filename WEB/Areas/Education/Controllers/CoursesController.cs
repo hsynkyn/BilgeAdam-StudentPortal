@@ -2,12 +2,15 @@
 using Business.Manager.Interface;
 using Core.Enums;
 using DTO.Concrete.CourseDTO;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WEB.Areas.Education.Models.CourseVM;
 
 namespace WEB.Areas.Education.Controllers
 {
     [Area("Education")]
+
+    [Authorize(Roles = "Admin,CustomerManager")]
     public class CoursesController(ICourseManager courseManager, IMapper mapper) : Controller
     {
         public async Task<IActionResult> Index()

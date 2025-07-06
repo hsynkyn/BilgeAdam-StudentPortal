@@ -17,6 +17,9 @@ namespace Business.AutoMapper
             CreateMap<Student, GetStudentDTO>().ReverseMap();
             CreateMap<Student, StudentDetailDTO>().ReverseMap();
             CreateMap<Student, UpdateStudentDTO>().ReverseMap();
+
+            CreateMap<GetStudentForClassroomDTO, Student>().ReverseMap().ForMember(x => x.FullName, opt => opt.MapFrom(x => x.FirstName + " " + x.LastName)).ForMember(x => x.Average, opt => opt.MapFrom(x => x.Average.HasValue ? x.Average.ToString() : " - "));
+
             CreateMap<StudentDetailDTO, Student>().ReverseMap().ForMember(x => x.ClassroomName, opt => opt.MapFrom(x => x.Classroom!.Name)).ForMember(x => x.CourseName, opt => opt.MapFrom(x => x.Classroom!.Teacher!.Course!.Name));
 
         }

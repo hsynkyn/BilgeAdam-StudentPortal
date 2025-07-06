@@ -17,7 +17,7 @@ namespace Core.Interface
         Task<bool> DeleteAsync(T entity);
 
         Task<T?> GetByIdAsync(Guid id);
-        Task<List<T>> GetByDefaultsAsync(Expression<Func<T, bool>> expression);
+        Task<List<T>> GetByDefaultsAsync(Expression<Func<T, bool>> expression, Func<IQueryable<T>, IIncludableQueryable<T, object>>? join = null);
         Task<T?> GetByDefaultAsync(Expression<Func<T, bool>> expression, Func<IQueryable<T>, IIncludableQueryable<T, object>>? join = null);
 
         Task<bool> AnyAsync(Expression<Func<T, bool>> expression);

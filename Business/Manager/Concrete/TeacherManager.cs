@@ -23,6 +23,11 @@ namespace Business.Manager.Concrete
             var selectListTeacher = _mapper.Map<GetTeacherForSelectListDTO>(teacher);
             return selectListTeacher;
         }
-        
+
+        public async Task<Guid> GetTeacherIdByAppUserId(Guid appUserId)
+        {
+            var teacher = await _service.GetByDefaultAsync(x=>x.AppUserId == appUserId);
+            return teacher!.Id;
+        }
     }
 }

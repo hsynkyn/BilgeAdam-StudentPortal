@@ -27,7 +27,8 @@ namespace DataAccess.SeedData.EntitySeedData
                         Exam2 = 80,
                         ProjectExam = 90,
                         RegisterPrice = 1500,
-                        ClassroomId = Guid.Parse("c1000000-0000-0000-0000-000000000001")
+                        ClassroomId = Guid.Parse("c1000000-0000-0000-0000-000000000001"),
+                        ProjectPath = "defaultProject.zip"
                     },
                     new Student
                     {
@@ -41,7 +42,8 @@ namespace DataAccess.SeedData.EntitySeedData
                         Exam2 = 75,
                         ProjectExam = 85,
                         RegisterPrice = 1450,
-                        ClassroomId = Guid.Parse("c1000000-0000-0000-0000-000000000001")
+                        ClassroomId = Guid.Parse("c1000000-0000-0000-0000-000000000001"),
+                        ProjectPath = "defaultProject.zip"
                     },
                     new Student
                     {
@@ -55,7 +57,8 @@ namespace DataAccess.SeedData.EntitySeedData
                         Exam2 = 65,
                         ProjectExam = 75,
                         RegisterPrice = 1350,
-                        ClassroomId = Guid.Parse("c1000000-0000-0000-0000-000000000001")
+                        ClassroomId = Guid.Parse("c1000000-0000-0000-0000-000000000001"),
+                        ProjectPath = "defaultProject.zip"
                     },
                     new Student
                     {
@@ -69,7 +72,8 @@ namespace DataAccess.SeedData.EntitySeedData
                         Exam2 = 50,
                         ProjectExam = 70,
                         RegisterPrice = 1400,
-                        ClassroomId = Guid.Parse("c1000000-0000-0000-0000-000000000001")
+                        ClassroomId = Guid.Parse("c1000000-0000-0000-0000-000000000001"),
+                        ProjectPath = "defaultProject.zip"
                     },
                     new Student
                     {
@@ -83,7 +87,8 @@ namespace DataAccess.SeedData.EntitySeedData
                         Exam2 = 90,
                         ProjectExam = 95,
                         RegisterPrice = 1600,
-                        ClassroomId = Guid.Parse("c1000000-0000-0000-0000-000000000001")
+                        ClassroomId = Guid.Parse("c1000000-0000-0000-0000-000000000001"),
+                        ProjectPath = "defaultProject.zip"
                     },
                     new Student
                     {
@@ -97,7 +102,8 @@ namespace DataAccess.SeedData.EntitySeedData
                         Exam2 = 55,
                         ProjectExam = 60,
                         RegisterPrice = 1250,
-                        ClassroomId = Guid.Parse("c2000000-0000-0000-0000-000000000002")
+                        ClassroomId = Guid.Parse("c2000000-0000-0000-0000-000000000002"),
+                        ProjectPath = "defaultProject.zip"
                     },
                     new Student
                     {
@@ -111,7 +117,8 @@ namespace DataAccess.SeedData.EntitySeedData
                         Exam2 = 70,
                         ProjectExam = 75,
                         RegisterPrice = 1300,
-                        ClassroomId = Guid.Parse("c2000000-0000-0000-0000-000000000002")
+                        ClassroomId = Guid.Parse("c2000000-0000-0000-0000-000000000002"),
+                        ProjectPath = "defaultProject.zip"
                     },
                     new Student
                     {
@@ -125,7 +132,8 @@ namespace DataAccess.SeedData.EntitySeedData
                         Exam2 = 95,
                         ProjectExam = 100,
                         RegisterPrice = 1700,
-                        ClassroomId = Guid.Parse("c2000000-0000-0000-0000-000000000002")
+                        ClassroomId = Guid.Parse("c2000000-0000-0000-0000-000000000002"),
+                        ProjectPath = "defaultProject.zip"
                     },
                     new Student
                     {
@@ -139,7 +147,8 @@ namespace DataAccess.SeedData.EntitySeedData
                         Exam2 = 65,
                         ProjectExam = 80,
                         RegisterPrice = 1500,
-                        ClassroomId = Guid.Parse("c2000000-0000-0000-0000-000000000002")
+                        ClassroomId = Guid.Parse("c2000000-0000-0000-0000-000000000002"),
+                        ProjectPath = "defaultProject.zip"
                     },
                     new Student
                     {
@@ -153,7 +162,8 @@ namespace DataAccess.SeedData.EntitySeedData
                         Exam2 = 60,
                         ProjectExam = 65,
                         RegisterPrice = 1400,
-                        ClassroomId = Guid.Parse("c2000000-0000-0000-0000-000000000002")
+                        ClassroomId = Guid.Parse("c2000000-0000-0000-0000-000000000002"),
+                        ProjectPath = "defaultProject.zip"
                     },
                     new Student
                     {
@@ -167,7 +177,8 @@ namespace DataAccess.SeedData.EntitySeedData
                         Exam2 = 85,
                         ProjectExam = 75,
                         RegisterPrice = 1550,
-                        ClassroomId = Guid.Parse("c3000000-0000-0000-0000-000000000003")
+                        ClassroomId = Guid.Parse("c3000000-0000-0000-0000-000000000003"),
+                        ProjectPath = "defaultProject.zip"
                     },
                     new Student
                     {
@@ -181,7 +192,8 @@ namespace DataAccess.SeedData.EntitySeedData
                         Exam2 = 60,
                         ProjectExam = 70,
                         RegisterPrice = 1350,
-                        ClassroomId = Guid.Parse("c3000000-0000-0000-0000-000000000003")
+                        ClassroomId = Guid.Parse("c3000000-0000-0000-0000-000000000003"),
+                        ProjectPath = "defaultProject.zip"
                     },
                     new Student
                     {
@@ -195,7 +207,8 @@ namespace DataAccess.SeedData.EntitySeedData
                         Exam2 = 50,
                         ProjectExam = 60,
                         RegisterPrice = 1250,
-                        ClassroomId = Guid.Parse("c3000000-0000-0000-0000-000000000003")
+                        ClassroomId = Guid.Parse("c3000000-0000-0000-0000-000000000003"),
+                        ProjectPath = "defaultProject.zip"
                     },
                     new Student
                     {
@@ -209,7 +222,8 @@ namespace DataAccess.SeedData.EntitySeedData
                         Exam2 = 85,
                         ProjectExam = 90,
                         RegisterPrice = 1600,
-                        ClassroomId = Guid.Parse("c3000000-0000-0000-0000-000000000003")
+                        ClassroomId = Guid.Parse("c3000000-0000-0000-0000-000000000003"),
+                        ProjectPath = "defaultProject.zip"
                     },
                     new Student
                     {
@@ -223,9 +237,9 @@ namespace DataAccess.SeedData.EntitySeedData
                         Exam2 = 90,
                         ProjectExam = 85,
                         RegisterPrice = 1650,
-                        ClassroomId = Guid.Parse("c3000000-0000-0000-0000-000000000003")
+                        ClassroomId = Guid.Parse("c3000000-0000-0000-0000-000000000003"),
+                        ProjectPath = "defaultProject.zip"
                     }
-
                 );
         }
     }

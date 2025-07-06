@@ -2,12 +2,14 @@
 using Business.Manager.Interface;
 using Core.Enums;
 using DTO.Concrete.RoleDTO;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WEB.Areas.Admin.Models.RoleVM;
 
 namespace WEB.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class RolesController(IRoleManager roleManager, IMapper mapper, IUserManager userManager) : Controller
     {
         public async Task<IActionResult> Index()

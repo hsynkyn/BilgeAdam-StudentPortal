@@ -47,7 +47,15 @@ namespace DataAccess.Services
         public Task<bool> AnyAsync(Expression<Func<T, bool>> expression) => _table.AnyAsync(expression);
 
 
-        public async Task<List<T>> GetByDefaultsAsync(Expression<Func<T, bool>> expression) => await _table.Where(expression).ToListAsync();
+        public async Task<List<T>> GetByDefaultsAsync(Expression<Func<T, bool>> expression, Func<IQueryable<T>, IIncludableQueryable<T, object>>? join = null)
+        {
+
+            IQueryable<T> query = _table;
+
+            if (join != null)
+                query = join(query);
+            return await _table.Where(expression).ToListAsync();
+        } 
 
         public async Task<T?> GetByDefaultAsync(Expression<Func<T, bool>> expression,Func<IQueryable<T>, IIncludableQueryable<T, object>>? join = null)
         {

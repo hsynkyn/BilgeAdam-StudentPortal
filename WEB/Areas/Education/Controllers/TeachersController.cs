@@ -2,22 +2,27 @@
 using Business.Manager.Concrete;
 using Business.Manager.Interface;
 using Core.Enums;
+using DTO.Concrete.ClassroomDTO;
 using DTO.Concrete.CourseDTO;
+using DTO.Concrete.StudentDTO;
 using DTO.Concrete.TeacherDTO;
 using DTO.Concrete.UserDTO;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using WEB.Areas.Education.Models.ClassroomVM;
 using WEB.Areas.Education.Models.CourseVM;
+using WEB.Areas.Education.Models.StudentVM;
 using WEB.Areas.Education.Models.TeacherVM;
 
 namespace WEB.Areas.Education.Controllers
 {
     [Area("Education")]
-    public class TeachersController(ITeacherManager teacherManager, IMapper mapper, ICourseManager courseManager, IUserManager userManager, IEmailSender emailSender) : Controller
+    public class TeachersController(ITeacherManager teacherManager, IMapper mapper, ICourseManager courseManager, IUserManager userManager, IEmailSender emailSender, IClassroomManager classroomManager, IStudentManager studentManager) : Controller
     {
-
+        [Authorize(Roles = "Admin,CustomerManager")]
         public async Task<IActionResult> Index()
         {
             var model = await teacherManager.GetFilteredListAsync
@@ -32,7 +37,7 @@ namespace WEB.Areas.Education.Controllers
             return View(model);
         }
 
-
+        [Authorize(Roles = "Admin,CustomerManager")]
         public async Task<IActionResult> CreateTeacher()
         {
             ViewBag.Courses = new SelectList
@@ -42,6 +47,7 @@ namespace WEB.Areas.Education.Controllers
             return View();
         }
 
+        [Authorize(Roles = "Admin,CustomerManager")]
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateTeacher(CreateTeacherVM model)
         {
@@ -118,6 +124,7 @@ namespace WEB.Areas.Education.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin,CustomerManager")]
         public async Task<IActionResult> UpdateTeacher(string id)
         {
             ViewBag.Courses = new SelectList
@@ -151,6 +158,7 @@ namespace WEB.Areas.Education.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "Admin,CustomerManager")]
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> UpdateTeacher(UpdateTeacherVM model)
         {
@@ -186,6 +194,7 @@ namespace WEB.Areas.Education.Controllers
 
         }
 
+        [Authorize(Roles = "Admin,CustomerManager")]
         public async Task<IActionResult> DeleteTeacher(string id)
         {
             var guidResult = Guid.TryParse(id, out Guid entityId);
@@ -226,6 +235,7 @@ namespace WEB.Areas.Education.Controllers
             return RedirectToAction(nameof(Index));
 
         }
+        [Authorize(Roles = "Admin,CustomerManager")]
         public async Task<IActionResult> GetTeachersByCourseId(string courseId)
         {
             var guidResult = Guid.TryParse(courseId, out Guid entityId);
@@ -241,6 +251,35 @@ namespace WEB.Areas.Education.Controllers
                 return Json(teachers);
             }
             return NotFound();
+        }
+
+        [Authorize(Roles = "Admin,CustomerManager,Teacher")]
+        public async Task<IActionResult> MyClassrooms()
+        {
+            var userId = await userManager.GetUserIdByClaimsAsync(User);
+            var teacherId = await teacherManager.GetTeacherIdByAppUserId(userId);
+            var classrooms = await classroomManager.GetByDefaultsAsync<GetClassroomForTeacherDTO>(x=>x.TeacherId == teacherId && x.Status != Status.Passive, x=>x.Include(z=>z.Students));
+
+            var model = mapper.Map<List<GetClassroomForTeacherVM>>(classrooms);
+            return View(model);
+        }
+
+        [Authorize(Roles = "Admin,CustomerManager,Teacher")]
+        public async Task<IActionResult> GetStudents(string Id)
+        {
+            var guidResult = Guid.TryParse(Id, out Guid entityId);
+
+            if (!guidResult)
+            {
+                TempData["Error"] = "Sınıf bulunamamıştır!!";
+                return RedirectToAction(nameof(Index));
+            }
+
+            var students = await studentManager.GetByDefaultsAsync<GetStudentForClassroomDTO>(x => x.ClassroomId == entityId && x.Status != Status.Passive);
+
+            var model = mapper.Map<List<GetStudentForClassroomVM>>(students);
+            return View(model);
+
         }
     }
 }

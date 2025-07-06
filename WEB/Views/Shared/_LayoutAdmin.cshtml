@@ -21,27 +21,34 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="Admin" asp-controller="Dashboard" asp-action="Index">Admin Paneli</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="Education" asp-controller="Courses" asp-action="Index">Kurslar</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="Education" asp-controller="Teachers" asp-action="Index">Öğretmenler</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="Education" asp-controller="Classrooms" asp-action="Index">Sınıflar</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="Education" asp-controller="Students" asp-action="Index">Öğrenciler</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="Admin" asp-controller="CustomerManagers" asp-action="Index">Müşteri Yöneticileri</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="Admin" asp-controller="Roles" asp-action="Index">Roller</a>
-                        </li>
+                        @if(User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-area="Admin" asp-controller="Dashboard" asp-action="Index">Admin Paneli</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-area="Admin" asp-controller="Roles" asp-action="Index">Roller</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-area="Admin" asp-controller="CustomerManagers" asp-action="Index">Müşteri Yöneticileri</a>
+                            </li>
+                        }                        
+                        @if(User.IsInRole("Admin") || User.IsInRole("CustomerManager")) 
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-area="Education" asp-controller="Courses" asp-action="Index">Kurslar</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-area="Education" asp-controller="Teachers" asp-action="Index">Öğretmenler</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-area="Education" asp-controller="Classrooms" asp-action="Index">Sınıflar</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-area="Education" asp-controller="Students" asp-action="Index">Öğrenciler</a>
+                            </li>
+                        }
+                        
                     </ul>
                 </div>
             </div>
@@ -53,7 +60,7 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="border-top footer text-muted d-flex align-items-center position-absolute bottom-0 justify-content-start w-100" style="height:50px;">
         <div class="container">
             &copy; 2025 - WEB - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>

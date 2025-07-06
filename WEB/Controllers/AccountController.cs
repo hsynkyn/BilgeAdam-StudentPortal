@@ -5,6 +5,7 @@ using DTO.Concrete.CustomerManagerDTO;
 using DTO.Concrete.StudentDTO;
 using DTO.Concrete.TeacherDTO;
 using DTO.Concrete.UserDTO;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages;
 using WEB.ActionFilters;
@@ -53,17 +54,31 @@ namespace WEB.Controllers
                 return RedirectToAction(nameof(Login));
             }
 
+            // Kullanıcı öğrenci ise
+            if (await _userManager.IsUserInRoleAsync(appUser!.UserName, "Student"))
+            {
+                return RedirectToAction("StudentDetail", "Students", new { area = "Education" });
+            }
+
+            // Kullanıcı öğretmen ise
+            if (await _userManager.IsUserInRoleAsync(appUser!.UserName, "Teacher"))
+            {
+                return RedirectToAction("MyClassrooms", "Teachers", new { area = "Education" });
+            }
+
             return RedirectToAction("Index", "Home");
 
 
         }
 
+        [Authorize]
         public async Task<IActionResult> Logout()
         {
             await _userManager.LogoutAsync();
             return RedirectToAction("Index", "Home");
         }
 
+        [Authorize]
         public async Task<IActionResult> EditUser()
         {
             var dto = await _userManager.FindUserByClaimsAsync<EditUserDTO>(User);
@@ -126,8 +141,8 @@ namespace WEB.Controllers
             return View(model);
         }
 
+        [Authorize]
         [HttpPost, ValidateAntiForgeryToken]
-
         public async Task<IActionResult> EditUser(EditUserVM model)
         {
 
@@ -158,6 +173,7 @@ namespace WEB.Controllers
             return View(model);
         }
 
+        [Authorize]
         public async Task<IActionResult> ChangePassword()
         {
             var userId = await _userManager.GetUserIdByClaimsAsync(User);
@@ -166,8 +182,8 @@ namespace WEB.Controllers
             return View(model);
         }
 
+        [Authorize]
         [HttpPost, ValidateAntiForgeryToken]
-
         public async Task<IActionResult> ChangePassword(ChangePasswordVM model)
         {
 
@@ -246,5 +262,7 @@ namespace WEB.Controllers
             }
         }
 
+
+        public IActionResult AccessDenied() => View();
     }
 }
