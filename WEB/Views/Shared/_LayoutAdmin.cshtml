@@ -1,5 +1,4 @@
-﻿
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -9,62 +8,155 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/WEB.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="~/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+          rel="stylesheet">
+    <link href="~/css/sb-admin-2.css" rel="stylesheet">
+
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">WEB</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        @if(User.IsInRole("Admin"))
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-white" asp-area="Admin" asp-controller="Dashboard" asp-action="Index">Admin Paneli</a>
+    <div id="wrapper">
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" asp-controller="Home" asp-action="Index" asp-area="">
+                <div class="sidebar-brand-icon rotate-n-15">
+                    <i class="fas fa-laugh-wink"></i>
+                </div>
+                <div class="sidebar-brand-text mx-3">Bilge Adam</div>
+            </a>
+
+            <hr class="sidebar-divider my-0">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Akademi</span>
+                </a>
+            </li>
+            <hr class="sidebar-divider" />
+            @if (User.IsInRole("Admin"))
+            {
+                <li class="nav-item">
+                    <a class="nav-link collapsed" asp-area="Admin" asp-controller="Dashboard" asp-action="Index">
+                        <i class="fas fa-fw fa-cog"></i>
+                        <span>Admin Paneli</span>
+                    </a>
+
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link collapsed" asp-area="Admin" asp-controller="Roles" asp-action="Index">
+                        <i class="fas fa-fw fa-cog"></i>
+                        <span>Roller</span>
+                    </a>
+
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link collapsed" asp-area="Admin" asp-controller="CustomerManagers" asp-action="Index">
+                        <i class="fas fa-fw fa-cog"></i>
+                        <span>Müşteri Yöneticileri</span>
+                    </a>
+                </li>
+            }
+            @if (User.IsInRole("Admin") || User.IsInRole("CustomerManager"))
+            {
+                <li class="nav-item">
+                    <a class="nav-link collapsed" asp-area="Education" asp-controller="Courses" asp-action="Index">
+                        <i class="fas fa-fw fa-cog"></i>
+                        <span>Kurslar</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link collapsed" asp-area="Education" asp-controller="Teachers" asp-action="Index">
+                        <i class="fas fa-fw fa-cog"></i>
+                        <span>Öğretmenler</span>
+                    </a>
+
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link collapsed" asp-area="Education" asp-controller="Classrooms" asp-action="Index">
+                        <i class="fas fa-fw fa-cog"></i>
+                        <span>Sınıflar</span>
+                    </a>
+
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link collapsed" asp-area="Education" asp-controller="Students" asp-action="Index">
+                        <i class="fas fa-fw fa-cog"></i>
+                        <span>Öğrenciler</span>
+                    </a>
+
+                </li>
+            }
+
+        </ul>
+        <div id="content-wrapper" class="d-flex flex-column">
+            <div id="content">
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                    @if (User != null && User.Identity!.IsAuthenticated)
+                    {
+
+                        <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                            <i class="fa fa-bars"></i>
+                        </button>
+
+                        <ul class="navbar-nav ml-auto">
+                            <li class="nav-item dropdown no-arrow">
+                                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">@User?.Identity?.Name</span>
+                                    <img class="img-profile rounded-circle"
+                                         src="~/img/undraw_profile.svg">
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                     aria-labelledby="userDropdown">
+                                    <a class="dropdown-item" asp-area="" asp-controller="Account" asp-action="EditUser">
+                                        <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Bilgileri Düzenle
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Çıkış Yap
+                                    </a>
+                                </div>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-white" asp-area="Admin" asp-controller="Roles" asp-action="Index">Roller</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-white" asp-area="Admin" asp-controller="CustomerManagers" asp-action="Index">Müşteri Yöneticileri</a>
-                            </li>
-                        }                        
-                        @if(User.IsInRole("Admin") || User.IsInRole("CustomerManager")) 
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-white" asp-area="Education" asp-controller="Courses" asp-action="Index">Kurslar</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-white" asp-area="Education" asp-controller="Teachers" asp-action="Index">Öğretmenler</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-white" asp-area="Education" asp-controller="Classrooms" asp-action="Index">Sınıflar</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-white" asp-area="Education" asp-controller="Students" asp-action="Index">Öğrenciler</a>
-                            </li>
-                        }
-                        
-                    </ul>
+                        </ul>
+
+                    }
+                </nav>
+                <div class="container-fluid">
+                    @RenderBody()
                 </div>
             </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
 
-    <footer class="border-top footer text-muted d-flex align-items-center position-absolute bottom-0 justify-content-start w-100" style="height:50px;">
-        <div class="container">
-            &copy; 2025 - WEB - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>BilgeAdam Akademi</span>
+                    </div>
+                </div>
+            </footer>
         </div>
-    </footer>
+    </div>
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Çıkış Yapma Uyarısı!</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Çıkış yapmak istediğinize emin misiniz?</div>
+                <div class="modal-footer">
+                    <button class="btn btn-outline-secondary" type="button" data-dismiss="modal">İptal</button>
+                    <a class="btn btn-outline-primary" asp-area="" asp-controller="Account" asp-action="Logout">Evet</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div id="swalMessages"
          data-success="@TempData["Success"]"
@@ -73,9 +165,14 @@
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="~/js/sb-admin-2.min.js"></script>
+    <script src="~/vendor/chart.js/Chart.min.js"></script>
+    <script src="~/js/demo/chart-area-demo.js"></script>
+    <script src="~/js/demo/chart-pie-demo.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

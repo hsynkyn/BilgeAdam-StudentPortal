@@ -82,9 +82,13 @@ namespace WEB.Areas.Education.Controllers
                     return View(model);
                 }
 
+                var teacher = await userManager.FindUserByEmailAsync(model.Email!);
+                if (teacher == null)
+                    return NotFound();
 
 
                 var dto = mapper.Map<CreateTeacherDTO>(model);
+                dto.AppUserId = teacher.Id;
                 var result = await teacherManager.AddAsync(dto);
                 if (!result)
                 {

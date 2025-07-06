@@ -62,3 +62,24 @@ th,  td{
         .unauthorized-container a:hover {
             background-color: #c0392b;
         }
+
+.bg-login-image {
+    background: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6Vt9Vc9K9YQG3maU91T0BfjhJWJBdKMuTSA&s");
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.bg-register-image {
+    background: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6Vt9Vc9K9YQG3maU91T0BfjhJWJBdKMuTSA&s");
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.bg-password-image {
+    background: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6Vt9Vc9K9YQG3maU91T0BfjhJWJBdKMuTSA&s");
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+}

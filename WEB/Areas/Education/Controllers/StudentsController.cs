@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Drawing;
+using AutoMapper;
 using Business.Manager.Interface;
 using Core.Entities.Concrete;
 using Core.Enums;
@@ -95,6 +96,9 @@ namespace WEB.Areas.Education.Controllers
                     TempData["Error"] = "Öğrenci role eklenemedi!";
                     return View(model);
                 }
+                var student = await userManager.FindUserByEmailAsync(model.Email!);
+                if (student == null)
+                    return NotFound();
 
                 string? savedImagePath = null;
                 if (model.Image != null && model.Image.Length > 0)
@@ -113,6 +117,7 @@ namespace WEB.Areas.Education.Controllers
                 model.ImagePath = savedImagePath;
 
                 var dto = mapper.Map<CreateStudentDTO>(model);
+                dto.AppUserId = student.Id;
 
                 var result = await studentManager.AddAsync(dto);
 

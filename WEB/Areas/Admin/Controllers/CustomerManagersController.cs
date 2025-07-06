@@ -63,8 +63,12 @@ namespace WEB.Areas.Admin.Controllers
                     return View(model);
                 }
 
+                var cManager = await userManager.FindUserByEmailAsync(model.Email!);
+                if (cManager == null)
+                    return NotFound();
 
                 var dto = mapper.Map<CreateCustomerManagerDTO>(model);
+                dto.AppUserId = cManager.Id;
                 var result = await customerManager.AddAsync(dto);
 
                 if (!result)

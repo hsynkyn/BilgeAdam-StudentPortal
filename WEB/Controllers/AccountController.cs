@@ -66,6 +66,12 @@ namespace WEB.Controllers
                 return RedirectToAction("MyClassrooms", "Teachers", new { area = "Education" });
             }
 
+            // Kullanıcı customermanager ise
+            if (await _userManager.IsUserInRoleAsync(appUser!.UserName, "CustomerManager"))
+            {
+                return RedirectToAction("Index", "Dashboard", new { area = "Admin" });
+            }
+
             return RedirectToAction("Index", "Home");
 
 

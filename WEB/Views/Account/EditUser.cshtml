@@ -1,50 +1,56 @@
 ﻿@{
-	ViewData["Title"] = "EditUser";
+    ViewData["Title"] = "EditUser";
+    Layout = "_LayoutAdmin";
 }
 @model EditUserVM
+<div class="container">
 
-<div class="row">
-	<div class="col-md-8">
-		<div class="card">
-			<div class="card-header">
-				<h3 class="card-title">Bilgileri Düzenle</h3>
-			</div>
-			<form asp-action="EditUser">
-				<input type="hidden" asp-for="Id"/>
-				<input type="hidden" asp-for="FirstName"/>
-				<input type="hidden" asp-for="LastName"/>
-				<div class="card-body">
-					<div>
-						<label asp-for="FirstName" class="form-label"></label>
-						<input disabled asp-for="FirstName" class="form-control" />
-						<span asp-validation-for="FirstName" class="text-danger"></span>
-					</div>
-					<div>
-						<label asp-for="LastName" class="form-label"></label>
-						<input disabled asp-for="LastName" class="form-control" />
-						<span asp-validation-for="LastName" class="text-danger"></span>
-					</div>
-					<div>
-						<label asp-for="Email" class="form-label"></label>
-						<input asp-for="Email" class="form-control" />
-						<span asp-validation-for="Email" class="text-danger"></span>
-					</div>
-					<div>
-						<label asp-for="UserName" class="form-label"></label>
-						<input asp-for="UserName" class="form-control" />
-						<span asp-validation-for="UserName" class="text-danger"></span>
-					</div>
-					<div>
-						<label asp-for="Password" class="form-label"></label>
-						<a asp-action="ChangePassword" class="btn btn-outline-dark d-block">Şifre Değiştir</a>
-					</div>
+    <div class="card o-hidden border-0 shadow-lg my-5">
+        <div class="card-body p-0">
+            <!-- Nested Row within Card Body -->
+            <div class="row">
+                <div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
+                <div class="col-lg-7">
+                    <div class="p-5">
+                        <div class="text-center">
+                            <h1 class="h4 text-gray-900 mb-4">Bilgileri Düzenle</h1>
+                        </div>
+                        <form class="user" asp-action="EditUser">
+                            <input type="hidden" asp-for="Id" />
+                            <input type="hidden" asp-for="FirstName" />
+                            <input type="hidden" asp-for="LastName" />
+                            <div class="form-group row">
+                                <div class="col-sm-6 mb-3 mb-sm-0">
+                                    <input asp-for="FirstName" disabled type="text" class="form-control form-control-user" id="exampleFirstName">
+                                </div>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control form-control-user" id="exampleLastName"
+                                           asp-for="LastName" disabled>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <input asp-for="Email" type="email" class="form-control form-control-user" id="exampleInputEmail"
+                                       placeholder="Email Address">
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <input asp-for="UserName" class="form-control form-control-user" id="exampleInputEmail">
+                                <span asp-validation-for="UserName" class="text-danger"></span>
+                            </div>
+                            <div class="form-group row">
+                                <div class="mb-3 mb-sm-0">
+                                    <a asp-action="ChangePassword" class="btn btn-outline-dark d-block">Şifre Değiştir</a>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-user btn-block">
+                                Kaydet
+                            </button>
+                            <hr>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-				</div>
-				<div class="card-footer d-flex align-items-center justify-content-between" style="height:50px">
-					<a asp-controller="Home" asp-action="Index" class="btn btn-outline-dark">Geri Dön</a>
-					<button type="submit" class="btn btn-outline-success">Kaydet</button>
-				</div>
-			</form>
-		</div>
-	</div>
 </div>

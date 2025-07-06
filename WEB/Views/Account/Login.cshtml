@@ -1,33 +1,48 @@
 ﻿@{
+
 	ViewData["Title"] = "Login";
+
+	Layout = "_LayoutAdmin";
+
 }
+
 @model LoginVM
+<div class="container">
+	<div class="row justify-content-center">
+		<div class="col-xl-10 col-lg-12 col-md-9">
+			<div class="card o-hidden border-0 shadow-lg my-5">
+				<div class="card-body p-0">
+					<div class="row">
+						<div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
+						<div class="col-lg-6">
+							<div class="p-5">
+								<div class="text-center">
+									<h1 class="h4 text-gray-900 mb-4">Hoşgeldiniz</h1>
+								</div>
+								<form class="user" asp-action="Login">
+									<div class="form-group">
+										<input asp-for="UserName" type="text" class="form-control form-control-user"
+											   id="exampleInputEmail" aria-describedby="emailHelp"
+											   placeholder="Kullanıcı adınızı giriniz...">
+									</div>
+									<div class="form-group">
+										<input asp-for="Password" type="password" class="form-control form-control-user"
+											   id="exampleInputPassword" placeholder="Şifre...">
+									</div>
+									<button type="submit" class="btn btn-primary btn-user btn-block">
 
-<div class="row">
-	<div class="col-md-8">
-		<div class="card">
-			<div class="card-header">
-				<h3 class="card-title">Giriş Yap</h3>
-			</div>
-			<form asp-action="Login">
-				<div class="card-body">
-					<div>
-						<label asp-for="UserName" class="form-label"></label>
-						<input asp-for="UserName" class="form-control" />
-						<span asp-validation-for="UserName" class="text-danger"></span>
+										Giriş Yap
+									</button>
+								</form>
+								<hr>
+								<div class="text-center">
+									<a class="small" href="forgot-password.html">Şifremi Unuttum?</a>
+								</div>
+							</div>
+						</div>
 					</div>
-					<div>
-						<label asp-for="Password" class="form-label"></label>
-						<input type="password" asp-for="Password" class="form-control" />
-						<span asp-validation-for="Password" class="text-danger"></span>
-					</div>					
-
 				</div>
-				<div class="card-footer d-flex align-items-center justify-content-between" style="height:50px">
-					<a asp-controller="Home" asp-action="Index" class="btn btn-outline-dark">Geri Dön</a>
-					<button type="submit" class="btn btn-outline-success">Giriş Yap</button>
-				</div>
-			</form>
+			</div>
 		</div>
 	</div>
 </div>
